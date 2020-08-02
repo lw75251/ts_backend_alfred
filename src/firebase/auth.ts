@@ -9,7 +9,7 @@ import {logger} from '../../config/chalk';
  */
 async function addFirebaseUser(user: User): Promise<string | undefined> {
   try {
-    const userRecord = await auth.createUser(user.toJson());
+    const userRecord = await auth.createUser(user.toFirestoreJson());
     // See the UserRecord reference doc for the contents of userRecord.
     logger.printLog({tag: 'Created User', log: userRecord.uid});
     return userRecord.uid;

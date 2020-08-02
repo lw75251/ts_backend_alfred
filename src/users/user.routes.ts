@@ -5,7 +5,7 @@ import * as userController from './user.controller';
 
 // import userController = require('./user.controller');
 
-const router = express.Router();
+const router = express();
 
 // / NOTE: Following Routes are appended to /user
 // router.get('/', userController.getUser);
@@ -14,10 +14,29 @@ const router = express.Router();
  * Create New User POST Endpoint
  * Route: '/user'
  */
-router.post('/', async function(
-  req: express.Request,
-  res: express.Response
-) {
+router.get('/', async function(req: express.Request, res: express.Response) {
+  const user = new User({
+    firstName: req.body.firstName,
+    lastName: req.body.lastName,
+    email: req.body.email,
+    password: req.body.password,
+    phoneNumber: req.body.phoneNumber,
+    hash: undefined,
+  });
+  logger.printLog({tag: 'Fetch User', log: user});
+
+  try {
+    // userController.getUser(newUser);
+  } catch (err) {
+    logger.errorLog({tag: 'Create User', log: err});
+  }
+});
+
+/**
+ * Create New User POST Endpoint
+ * Route: '/user'
+ */
+router.post('/', async function(req: express.Request, res: express.Response) {
   const newUser = new User({
     firstName: req.body.firstName,
     lastName: req.body.lastName,
@@ -25,8 +44,6 @@ router.post('/', async function(
     password: req.body.password,
     phoneNumber: req.body.phoneNumber,
   });
-  logger.printLog({tag: 'createUser', log: newUser});
-
   try {
     userController.createUser(newUser);
   } catch (err) {
@@ -34,5 +51,4 @@ router.post('/', async function(
   }
 });
 
-
-module.exports = router;
+export {router};
