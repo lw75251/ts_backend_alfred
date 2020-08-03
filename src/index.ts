@@ -10,11 +10,13 @@ import bodyParser = require('body-parser');
 // Routes
 // const userRoutes = require('../src/users/user.routes').router;
 import * as userRoutes from '../src/users/user.routes';
+import * as loginRoutes from '../src/users/login.routes';
 
 const app = express();
 app.use(bodyParser.json());
 const PORT = process.env.PORT || 3000;
 
+app.use('/login', loginRoutes.router);
 app.use('/user', userRoutes.router);
 
 app.listen(PORT, () => {
