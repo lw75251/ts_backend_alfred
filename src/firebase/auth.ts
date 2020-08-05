@@ -57,11 +57,30 @@ async function createToken(userId: string): Promise<string> {
 };
 
 /**
- * Verifies auth token created from Firebase Auth
+ * Creates an auth token from Firebase Auth
+ * @param {string} userId: Unique ID of User
+ * @param {object} data: Additional Data to store in custom token
+ * @return {Promise<string>} uid: Returns the Firebase Auth User ID
+ */
+async function createTokenWithData(
+  userId: string,
+  data: object
+): Promise<string> {
+  try {
+    const customToken = await auth.createCustomToken(userId, data);
+    return customToken;
+  } catch (err) {
+    logger.errorLog({tag: 'Custom Token', log: err});
+    throw err;
+  }
+};
+
+/**
+ * Verifies a JWT Token
  * @param {string} idToken: Unique ID of User
  * @return {Promise<string>} uid: Returns the Firebase Auth User ID
  */
-async function verifyToken(idToken: string): Promise<string> {
+async function verifyJWTToken(idToken: string): Promise<string> {
   try {
     const decodedToken = await auth.verifyIdToken(idToken);
     return decodedToken.uid;
@@ -71,4 +90,19 @@ async function verifyToken(idToken: string): Promise<string> {
   }
 };
 
-export {addFirebaseUser, updateFirebaseUser, createToken, verifyToken};
+/**
+ * Verifies auth token created from Firebase Auth
+ * @param {string} idToken: Unique ID of User
+ * @return {Promise<string>} uid: Returns the Firebase Auth User ID
+ */
+async function verifyFirebaseToken(idToken: string): Promise<string> {
+  try {
+    const decodedToken = await auth.verifyIdToken(idToken);
+    return decodedToken.uid;
+  } catch (err) {
+    logger.errorLog({tag: 'Verify Token', log: err});
+    throw err;
+  }
+};
+
+export {addFirebaseUser, updateFirebaseUser, createToken, verifyFirebaseToken};
