@@ -83,7 +83,7 @@ async function createUser(user: User): Promise<object> {
     user.id = await auth.addFirebaseUser(user);
     setPassword(user);
 
-    if ( user.id === undefined ) {
+    if (user.id === undefined) {
       throw Error(`UserId was undefined`);
     }
 
