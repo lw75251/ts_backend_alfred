@@ -1,15 +1,15 @@
 import {db} from '../../config/firebase';
 import {logger} from '../../config/chalk';
 
-enum QueryOperators{
+enum QueryOperators {
   LessThan = '<',
   LessThanOrEqual = '<=',
   Equal = '==',
   GreaterThanOrEqual = '>=',
-  GreaterThan ='>',
+  GreaterThan = '>',
   ArrayContains = 'array-contains',
   In = 'in',
-  ArrayContainsAny = 'array-contains-any'
+  ArrayContainsAny = 'array-contains-any',
 }
 
 /** Queries
@@ -32,22 +32,19 @@ async function queryInCollection(
   return snapshot;
 }
 
-
 /** Fetches data from a specified Firestore Document
  * @param {string} collection: Firestore collection name document is in
  * @param {string} document: Firestore document name
  * @param {object} data: Data in dcoument
  */
-async function getDocument(
-  collection: string,
-  document: string
-) {
+async function getDocument(collection: string, document: string) {
   try {
     const docRef = db.collection(collection).doc(document);
     const doc = await docRef.get();
-    if ( !doc.exists ) {
-      throw Error(`Document with ${document} ID` +
-        `does not exist in ${collection}`);
+    if (!doc.exists) {
+      throw Error(
+        `Document with ${document} ID` + `does not exist in ${collection}`
+      );
     }
     return doc.data();
   } catch (err) {

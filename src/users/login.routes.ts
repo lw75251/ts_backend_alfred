@@ -11,7 +11,7 @@ const router = express();
  * User Login POST Endpoint
  * Route: '/login'
  */
-router.post('/', async function(req: express.Request, res: express.Response) {
+router.post('/', async function (req: express.Request, res: express.Response) {
   const email = req.body.email;
   const password = req.body.password;
 
@@ -22,7 +22,7 @@ router.post('/', async function(req: express.Request, res: express.Response) {
       console.log('passowrd true');
     } else {
       console.log('password false');
-    };
+    }
   } catch (err) {
     logger.errorLog({tag: 'Login', log: err.message});
   }
