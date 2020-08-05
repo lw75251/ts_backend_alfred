@@ -1,23 +1,23 @@
-require('dotenv').config();
 
+import * as dotenv from 'dotenv';
 import express = require('express');
 import bodyParser = require('body-parser');
-// import bcrypt = require('bcrypt');
+import jwt from 'jsonwebtoken';
 
-// Firebase
-// const firestore = require('../../config/firebase.js').db;
 
 // Routes
-// const userRoutes = require('../src/users/user.routes').router;
 import * as userRoutes from '../src/users/user.routes';
 import * as loginRoutes from '../src/users/login.routes';
 
+dotenv.config();
+
 const app = express();
 app.use(bodyParser.json());
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 4000;
 
 app.use('/login', loginRoutes.router);
 app.use('/user', userRoutes.router);
+
 
 app.listen(PORT, () => {
   console.log(`Server is up and running on port number ${PORT}`);
